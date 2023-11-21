@@ -40,6 +40,9 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float lowJumpMultiplier;
     [SerializeField] private float fallSpeed;
 
+    [SerializeField] private float wallJumpVerticalForce;
+    [SerializeField] private float wallJumpHorizontalForce;
+
     [SerializeField] private float maxStamina;
     [SerializeField] private float maxSanity;
     [SerializeField] private float staminaRegen; // per sec
@@ -60,6 +63,7 @@ public class CharacterControl : MonoBehaviour
     public bool grounded;
     public bool touchingRight;
     public bool touchingLeft;
+    public bool wallJumping;
 
     [Header("Controls")]
 
@@ -67,6 +71,10 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private KeyCode moveRight;
     [SerializeField] private KeyCode jump;
     [SerializeField] private KeyCode hang;
+
+    [Header("Timers")]
+    [SerializeField] private float wallJumpFreeDuration;
+
 
     public void Initialize()
     {
@@ -97,20 +105,39 @@ public class CharacterControl : MonoBehaviour
 
         if (Input.GetKey(hang))
         {
-            if (touchingLeft)
+            if (!Input.GetKeyDown(jump) && stamina > staminaJumpCost)
             {
-
+                if (touchingLeft)
+                {
+                    // Play anim
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                }
+                else if (touchingRight)
+                {
+                    // Play anim
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                }
             }
-            else if (touchingRight)
+
+            if (Input.GetKeyDown(jump))
             {
-
+                WallJump();
             }
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
         }
 
         // Jump Physics
         if (rb.velocity.y < 0)
         {
             rb.velocity += (fallSpeed - 1) * Physics.gravity.y * Time.deltaTime * Vector3.up;
+
+            if (!grounded)
+            {
+                jumpCount = 0;
+            }
         }
         else if (rb.velocity.y > 0 && !(Input.GetKey(KeyCode.Space)))
         {
@@ -149,12 +176,40 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
+    private void WallJump()
+    {
+        if(characterState != CharacterState.HANGING)
+        {
+            return;
+        }
+
+        // Pay stamina first
+        if (stamina > staminaJumpCost)
+        {
+            stamina -= staminaJumpCost;
+        }
+        else
+        {
+            return;
+        }
+
+        if (touchingLeft)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(new Vector3(wallJumpHorizontalForce, wallJumpVerticalForce, 0), ForceMode.Impulse);
+        }
+        else if (touchingRight)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(new Vector3(-wallJumpHorizontalForce, wallJumpVerticalForce, 0), ForceMode.Impulse);
+        }
+    }
+
     private void Jump()
     {
         List<CharacterState> validStates = new List<CharacterState> { 
             CharacterState.STANDING,
             CharacterState.RUNNING,
-            CharacterState.HANGING,
             CharacterState.ON_LEDGE
         };
 
@@ -189,11 +244,6 @@ public class CharacterControl : MonoBehaviour
             // Jump off ground
             rb.velocity = new Vector3(rb.velocity.x, 0);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-
-        if (characterState == CharacterState.HANGING)
-        {
-            // Wall jump
         }
     }
 

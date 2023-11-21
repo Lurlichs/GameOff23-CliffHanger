@@ -8,7 +8,7 @@ public class WallChecker : MonoBehaviour
     [SerializeField] CharacterControl characterControl;
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Wall"))
         {
@@ -23,17 +23,17 @@ public class WallChecker : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.CompareTag("Wall"))
         {
             if (left)
             {
-                characterControl.touchingRight = true;
+                characterControl.touchingRight = false;
             }
             else
             {
-                characterControl.touchingLeft = true;
+                characterControl.touchingLeft = false;
             }
         }
     }
