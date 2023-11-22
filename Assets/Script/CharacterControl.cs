@@ -224,9 +224,13 @@ public class CharacterControl : MonoBehaviour
         }
 
         // Failsafe for buggy interactions
-        if (grounded && jumpCount == 0 && !hanging && rb.velocity.y > 0.05f)
+        if (grounded && jumpCount == 0 && !hanging && rb.velocity.y < 0.02f)
         {
             RefreshJump();
+        }
+        else if (!grounded)
+        {
+            jumpCount = 0;
         }
     }
 
