@@ -262,8 +262,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec16c5536fdaa64383c9148071436ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cutsceneManager: {fileID: 995597322}
   staminaSlider: {fileID: 416124919}
   sanitySlider: {fileID: 2076658601}
+  HUDGroup: {fileID: 42543225}
+  cutsceneBars: {fileID: 399080173}
 --- !u!225 &42543225
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2342,6 +2345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 995597321}
+  - component: {fileID: 995597322}
   m_Layer: 5
   m_Name: CutsceneSetup
   m_TagString: Untagged
@@ -2369,6 +2373,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &995597322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995597320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4775f04337e7a2a4da71cb0ba96f32c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneText: {fileID: 1384121499}
+  lines: []
+  textSpeed: 0.1
+  cutsceneActive: 0
 --- !u!1001 &1004824708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2799,6 +2819,77 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1126388082}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1130591933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1130591935}
+  - component: {fileID: 1130591934}
+  - component: {fileID: 1130591936}
+  m_Layer: 0
+  m_Name: CutsceneTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1130591934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130591933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd34762621d08547aa9e6521aa8c8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneLines:
+  - This is a test
+  - A test of my conviction
+  - I hope I can do this
+  - No... I can do this... I WILL do this
+--- !u!4 &1130591935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130591933}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2, y: -2.02, z: -2.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1130591936
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130591933}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.48, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1265031595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3687,7 +3778,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Cutscene Text goes here
+  m_Text: 
 --- !u!222 &1384121500
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9554,3 +9645,4 @@ SceneRoots:
   - {fileID: 2098749835}
   - {fileID: 138710731}
   - {fileID: 83303108}
+  - {fileID: 1130591935}
