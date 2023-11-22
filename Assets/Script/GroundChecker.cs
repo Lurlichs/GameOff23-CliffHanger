@@ -12,6 +12,7 @@ public class GroundChecker : MonoBehaviour
         {
             characterControl.RefreshJump();
             characterControl.grounded = true;
+            characterControl.animationManager.anim.SetBool("Landed", true);
         }
     }
 
@@ -20,6 +21,8 @@ public class GroundChecker : MonoBehaviour
         if (collision.CompareTag("Wall"))
         {
             characterControl.grounded = false;
+            characterControl.animationManager.anim.SetBool("Landed", false);
+            characterControl.animationManager.PlayTargetAnimation("JumpUp");
         }
     }
 }

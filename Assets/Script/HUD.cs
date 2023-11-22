@@ -24,6 +24,9 @@ public class HUD : MonoBehaviour
     {
         staminaSlider.maxValue = maxStam;
         sanitySlider.maxValue = maxSan;
+        
+        UpdateStaminaDisplay(maxStam);
+        UpdateSanityDisplay(maxSan);
     }
     
     public void UpdateStaminaDisplay(float val)

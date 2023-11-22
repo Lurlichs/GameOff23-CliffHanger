@@ -82,6 +82,9 @@ public class CharacterControl : MonoBehaviour
     [Header("Timers")]
     [SerializeField] private float wallJumpCurrentTimer;
 
+    [Header("Animation Manager")]
+    public CharacterAnimation animationManager;
+
 
     public void Initialize()
     {
@@ -140,6 +143,8 @@ public class CharacterControl : MonoBehaviour
                     // Hacky, can't be pushed by environment
                     rb.velocity = new Vector3(0, rb.velocity.y);
                 }
+
+                animationManager.UpdateAnimatorValue(0);
             }
 
             if (Input.GetKeyDown(jump) && !hanging)
@@ -153,13 +158,15 @@ public class CharacterControl : MonoBehaviour
                 {
                     if (touchingLeft)
                     {
-                        // Play anim
+                        // Play anim 
+                        animationManager.PlayTargetAnimation("WallStick");
                         hanging = true;
                         rb.constraints = RigidbodyConstraints.FreezeAll;
                     }
                     else if (touchingRight)
                     {
                         // Play anim
+                        animationManager.PlayTargetAnimation("WallStick");
                         hanging = true;
                         rb.constraints = RigidbodyConstraints.FreezeAll;
                     }
@@ -168,6 +175,7 @@ public class CharacterControl : MonoBehaviour
                 if (Input.GetKeyDown(jump))
                 {
                     WallJump();
+                    animationManager.PlayTargetAnimation("WallStickJump");
                 }
             }
             else
@@ -248,11 +256,16 @@ public class CharacterControl : MonoBehaviour
             if (left)
             {
                 rb.velocity = new Vector3(-horizontalSpeed, rb.velocity.y, 0);
+                animationManager.FlipModel(-1);
             }
             else
             {
                 rb.velocity = new Vector3(horizontalSpeed, rb.velocity.y, 0);
+                animationManager.FlipModel(1);
             }
+
+            //
+            animationManager.UpdateAnimatorValue(1);
         }
         else
         {
@@ -295,6 +308,9 @@ public class CharacterControl : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
             wallJumping = true;
             hanging = false;
+
+            animationManager.PlayTargetAnimation("WallStickJump");
+            animationManager.FlipModel(1);
         }
         else if (touchingRight)
         {
@@ -303,6 +319,9 @@ public class CharacterControl : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
             wallJumping = true;
             hanging = false;
+
+            animationManager.PlayTargetAnimation("WallStickJump");
+            animationManager.FlipModel(-1);
         }
     }
 
@@ -345,6 +364,8 @@ public class CharacterControl : MonoBehaviour
             // Jump off ground
             rb.velocity = new Vector3(rb.velocity.x, 0);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            animationManager.PlayTargetAnimation("JumpUp");
+            animationManager.anim.SetBool("Landed", false);
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterAnimation : MonoBehaviour
 {
-    public Animator anim;
+    [HideInInspector] public Animator anim;
     int idleRunBlend;
 
     private void Start()
@@ -30,9 +30,9 @@ public class CharacterAnimation : MonoBehaviour
     //SanityHigh
     #endregion
 
-    public void PlayTargetAnimation(string targetAnim, bool isInteracting)
+    public void PlayTargetAnimation(string targetAnim)
     {
-        anim.CrossFade(targetAnim, 0.2f);
+        anim.CrossFade(targetAnim, 0.01f);
     }
 
     public void UpdateAnimatorValue(float moveAmount)
@@ -48,6 +48,11 @@ public class CharacterAnimation : MonoBehaviour
             v = 0;
         }
 
-        anim.SetFloat(idleRunBlend, v, 0.1f, Time.deltaTime);
+        anim.SetFloat("IdleRunBlend", v, 0.2f, Time.deltaTime);
+    }
+
+    public void FlipModel(float direction)
+    {
+        gameObject.transform.localScale = new Vector3(1, 1, direction);
     }
 }
