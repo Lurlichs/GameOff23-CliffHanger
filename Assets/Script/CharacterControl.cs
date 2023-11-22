@@ -49,6 +49,12 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float sanityDrain; // drain while in terrifying situations
 
     [SerializeField] private float staminaJumpCost;
+    [SerializeField] private float hangStaminaCost;
+    [SerializeField] private float wallJumpLockDuration;
+
+    [SerializeField] private float midairAcceleration;
+    [SerializeField] private float groundDecel;
+    [SerializeField] private float midairDecel;
 
     public float stamina;
     public float sanity;
@@ -63,6 +69,7 @@ public class CharacterControl : MonoBehaviour
     public bool grounded;
     public bool touchingRight;
     public bool touchingLeft;
+    public bool hanging;
     public bool wallJumping;
 
     [Header("Controls")]
@@ -73,7 +80,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private KeyCode hang;
 
     [Header("Timers")]
-    [SerializeField] private float wallJumpFreeDuration;
+    [SerializeField] private float wallJumpCurrentTimer;
 
 
     public void Initialize()
@@ -84,64 +91,134 @@ public class CharacterControl : MonoBehaviour
     void Update()
     {
         // Detect Inputs
-        if (Input.GetKey(moveLeft))
+        if (!wallJumping)
         {
-            Move(true);
-        }
-        else if (Input.GetKey(moveRight))
-        {
-            Move(false);
-        }
-        else
-        {
-            // Hacky, can't be pushed by environment
-            rb.velocity = new Vector3(0, rb.velocity.y);
-        }
-
-        if (Input.GetKeyDown(jump))
-        {
-            Jump();
-        }
-
-        if (Input.GetKey(hang))
-        {
-            if (!Input.GetKeyDown(jump) && stamina > staminaJumpCost)
+            if (Input.GetKey(moveLeft))
             {
-                if (touchingLeft)
+                Move(true, Time.deltaTime);
+            }
+            else if (Input.GetKey(moveRight))
+            {
+                Move(false, Time.deltaTime);
+            }
+            else
+            {
+                // Decel if midair
+                if (!grounded)
                 {
-                    // Play anim
-                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                    if(rb.velocity.x > -0.05f && rb.velocity.x < 0.05f)
+                    {
+                        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                    }
+                    else
+                    {
+                        if (rb.velocity.x > 0)
+                        {
+                            rb.velocity = new Vector3(rb.velocity.x - midairDecel * Time.deltaTime, rb.velocity.y, 0);
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector3(rb.velocity.x + midairDecel * Time.deltaTime, rb.velocity.y, 0);
+                        }
+                    }
                 }
-                else if (touchingRight)
+                else
                 {
-                    // Play anim
-                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                    //if (rb.velocity.x > -0.05f || rb.velocity.x < 0.05f)
+                    //{
+                    //    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                    //}
+                    //if (rb.velocity.x > 0)
+                    //{
+                    //    rb.velocity = new Vector3(rb.velocity.x - groundDecel * Time.deltaTime, rb.velocity.y, 0);
+                    //}
+                    //else
+                    //{
+                    //    rb.velocity = new Vector3(rb.velocity.x + groundDecel * Time.deltaTime, rb.velocity.y, 0);
+                    //}
+
+                    // Hacky, can't be pushed by environment
+                    rb.velocity = new Vector3(0, rb.velocity.y);
                 }
             }
 
-            if (Input.GetKeyDown(jump))
+            if (Input.GetKeyDown(jump) && !hanging)
             {
-                WallJump();
+                Jump();
+            }
+
+            if (Input.GetKey(hang) && stamina > 0)
+            {
+                if (!Input.GetKeyDown(jump))
+                {
+                    if (touchingLeft)
+                    {
+                        // Play anim
+                        hanging = true;
+                        rb.constraints = RigidbodyConstraints.FreezeAll;
+                    }
+                    else if (touchingRight)
+                    {
+                        // Play anim
+                        hanging = true;
+                        rb.constraints = RigidbodyConstraints.FreezeAll;
+                    }
+                }
+
+                if (Input.GetKeyDown(jump))
+                {
+                    WallJump();
+                }
+            }
+            else
+            {
+                hanging = false;
+                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            }
+
+            // Stamina Regen
+            if (grounded && rb.velocity.x < 0.05f && rb.velocity.x > -0.05f)
+            {
+                RegenStamina(Time.deltaTime);
+            }
+
+            // Hang Stamina
+            if (hanging)
+            {
+                HangStamina(Time.deltaTime);
             }
         }
-        else
+
+        // Wall Jump Timer
+        if (wallJumping)
         {
-            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            if(wallJumpCurrentTimer < wallJumpLockDuration)
+            {
+                wallJumpCurrentTimer += Time.deltaTime;
+            }
+            else
+            {
+                wallJumping = false;
+                wallJumpCurrentTimer = 0;
+            }
         }
 
         // Jump Physics
-        if (rb.velocity.y < 0)
+        if (rb.velocity.y < 0 && !grounded)
         {
             rb.velocity += (fallSpeed - 1) * Physics.gravity.y * Time.deltaTime * Vector3.up;
 
-            if (!grounded)
-            {
-                jumpCount = 0;
-            }
+            jumpCount = 0;
         }
         else if (rb.velocity.y > 0 && !(Input.GetKey(KeyCode.Space)))
         {
             rb.velocity += (lowJumpMultiplier - 1) * Physics.gravity.y * Time.deltaTime * Vector3.up;
+        }
+
+        // Failsafe for buggy interactions
+        if (grounded && jumpCount == 0 && !hanging && rb.velocity.y > 0.05f)
+        {
+            RefreshJump();
         }
     }
 
@@ -150,7 +227,7 @@ public class CharacterControl : MonoBehaviour
         characterState = newState;
     }
 
-    private void Move(bool left)
+    private void Move(bool left, float deltaTime = 0)
     {
         List<CharacterState> validStates = new List<CharacterState> {
             CharacterState.STANDING,
@@ -166,25 +243,43 @@ public class CharacterControl : MonoBehaviour
             return;
         }
 
-        if (left)
+        if (grounded)
         {
-            rb.velocity = new Vector3(-horizontalSpeed, rb.velocity.y, 0);
+            if (left)
+            {
+                rb.velocity = new Vector3(-horizontalSpeed, rb.velocity.y, 0);
+            }
+            else
+            {
+                rb.velocity = new Vector3(horizontalSpeed, rb.velocity.y, 0);
+            }
         }
         else
         {
-            rb.velocity = new Vector3(horizontalSpeed, rb.velocity.y, 0);
+            if (left)
+            {
+                rb.velocity = new Vector3(rb.velocity.x - midairAcceleration * deltaTime, rb.velocity.y, 0);
+            }
+            else
+            {
+                rb.velocity = new Vector3(rb.velocity.x + midairAcceleration * deltaTime, rb.velocity.y, 0);
+            }
+
+            if(rb.velocity.x > horizontalSpeed) { rb.velocity = new Vector3(horizontalSpeed, rb.velocity.y, 0); }
+            if(rb.velocity.x < -horizontalSpeed) { rb.velocity = new Vector3(-horizontalSpeed, rb.velocity.y, 0); }
         }
+
     }
 
     private void WallJump()
     {
-        if(characterState != CharacterState.HANGING)
-        {
-            return;
-        }
+        //if(characterState != CharacterState.HANGING)
+        //{
+        //    return;
+        //}
 
         // Pay stamina first
-        if (stamina > staminaJumpCost)
+        if (stamina >= staminaJumpCost)
         {
             stamina -= staminaJumpCost;
         }
@@ -197,11 +292,17 @@ public class CharacterControl : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             rb.AddForce(new Vector3(wallJumpHorizontalForce, wallJumpVerticalForce, 0), ForceMode.Impulse);
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            wallJumping = true;
+            hanging = false;
         }
         else if (touchingRight)
         {
             rb.velocity = Vector3.zero;
             rb.AddForce(new Vector3(-wallJumpHorizontalForce, wallJumpVerticalForce, 0), ForceMode.Impulse);
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            wallJumping = true;
+            hanging = false;
         }
     }
 
@@ -230,7 +331,7 @@ public class CharacterControl : MonoBehaviour
         }
 
         // Pay stamina first
-        if(stamina > staminaJumpCost)
+        if(stamina >= staminaJumpCost)
         {
             stamina -= staminaJumpCost;
         }
@@ -255,6 +356,13 @@ public class CharacterControl : MonoBehaviour
     private void RegenStamina(float duration)
     {
         stamina += duration * staminaRegen;
+
+        CapStats();
+    }
+
+    private void HangStamina(float duration)
+    {
+        stamina -= duration * hangStaminaCost;
 
         CapStats();
     }

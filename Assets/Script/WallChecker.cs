@@ -29,11 +29,11 @@ public class WallChecker : MonoBehaviour
         {
             if (left)
             {
-                characterControl.touchingRight = false;
+                characterControl.touchingLeft = false;
             }
             else
             {
-                characterControl.touchingLeft = false;
+                characterControl.touchingRight = false;
             }
         }
     }
