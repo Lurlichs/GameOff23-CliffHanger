@@ -256,8 +256,8 @@ Transform:
   m_GameObject: {fileID: 59465873}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.91, y: -1.96, z: -0.3499999}
-  m_LocalScale: {x: 2.2899, y: 4, z: 1}
+  m_LocalPosition: {x: -0.91, y: -2.24, z: -0.3499999}
+  m_LocalScale: {x: 2.2899, y: 3.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1808940803}
@@ -361,7 +361,7 @@ Transform:
   m_GameObject: {fileID: 103306994}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13, y: 7.97, z: -0.3499999}
+  m_LocalPosition: {x: -0.13, y: 7.48, z: -0.3499999}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1088,12 +1088,12 @@ MonoBehaviour:
   wallJumpHorizontalForce: 7
   maxStamina: 100
   maxSanity: 100
-  staminaRegen: 30
-  sanityDrain: 0
-  staminaJumpCost: 20
+  staminaRegen: 35
+  sanityDrain: 2
+  staminaJumpCost: 15
   hangStaminaCost: 4
   wallJumpLockDuration: 0.3
-  midairAcceleration: 8
+  midairAcceleration: 30
   groundDecel: 50
   midairDecel: 5
   stamina: 100
@@ -1421,7 +1421,7 @@ Transform:
   m_GameObject: {fileID: 1153228954}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 3.91, z: -0.3499999}
+  m_LocalPosition: {x: -0.05, y: 3.42, z: -0.3499999}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6544,7 +6544,7 @@ Transform:
   m_GameObject: {fileID: 1790450448}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.21, y: 6.27, z: -0.3499999}
+  m_LocalPosition: {x: -5.21, y: 5.78, z: -0.3499999}
   m_LocalScale: {x: 2.2899, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
