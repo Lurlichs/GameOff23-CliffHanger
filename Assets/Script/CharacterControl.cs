@@ -85,7 +85,6 @@ public class CharacterControl : MonoBehaviour
     [Header("Animation Manager")]
     public CharacterAnimation animationManager;
 
-
     public void Initialize()
     {
 
