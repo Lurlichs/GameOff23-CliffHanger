@@ -8,7 +8,7 @@ public class CutsceneTrigger : MonoBehaviour
 
     private void Start()
     {
-        HUD.instance.BeginCutscene(cutsceneLines);
+        //HUD.instance.BeginCutscene(cutsceneLines);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -16,6 +16,7 @@ public class CutsceneTrigger : MonoBehaviour
         if (other.gameObject.GetComponent<CharacterControl>() != null)
         {
             HUD.instance.BeginCutscene(cutsceneLines);
+            gameObject.SetActive(false);
         }
     }
 }
