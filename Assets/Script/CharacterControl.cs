@@ -66,6 +66,8 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private CharacterState characterState;
     [SerializeField] private float jumpCount;
 
+    public bool controllable;
+
     public bool grounded;
     public bool touchingRight;
     public bool touchingLeft;
@@ -92,144 +94,152 @@ public class CharacterControl : MonoBehaviour
 
     void Update()
     {
-        // Detect Inputs
-        if (!wallJumping)
+        if (controllable)
         {
-            if (Input.GetKey(moveLeft))
+            // Detect Inputs
+            if (!wallJumping)
             {
-                Move(true, Time.deltaTime);
-            }
-            else if (Input.GetKey(moveRight))
-            {
-                Move(false, Time.deltaTime);
-            }
-            else
-            {
-                // Decel if midair
-                if (!grounded)
+                if (Input.GetKey(moveLeft))
                 {
-                    if(rb.velocity.x > -0.05f && rb.velocity.x < 0.05f)
+                    Move(true, Time.deltaTime);
+                }
+                else if (Input.GetKey(moveRight))
+                {
+                    Move(false, Time.deltaTime);
+                }
+                else
+                {
+                    // Decel if midair
+                    if (!grounded)
                     {
-                        rb.velocity = new Vector3(0, rb.velocity.y, 0);
-                    }
-                    else
-                    {
-                        if (rb.velocity.x > 0)
+                        if (rb.velocity.x > -0.05f && rb.velocity.x < 0.05f)
                         {
-                            rb.velocity = new Vector3(rb.velocity.x - midairDecel * Time.deltaTime, rb.velocity.y, 0);
+                            rb.velocity = new Vector3(0, rb.velocity.y, 0);
                         }
                         else
                         {
-                            rb.velocity = new Vector3(rb.velocity.x + midairDecel * Time.deltaTime, rb.velocity.y, 0);
+                            if (rb.velocity.x > 0)
+                            {
+                                rb.velocity = new Vector3(rb.velocity.x - midairDecel * Time.deltaTime, rb.velocity.y, 0);
+                            }
+                            else
+                            {
+                                rb.velocity = new Vector3(rb.velocity.x + midairDecel * Time.deltaTime, rb.velocity.y, 0);
+                            }
                         }
+                    }
+                    else
+                    {
+                        //if (rb.velocity.x > -0.05f || rb.velocity.x < 0.05f)
+                        //{
+                        //    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                        //}
+                        //if (rb.velocity.x > 0)
+                        //{
+                        //    rb.velocity = new Vector3(rb.velocity.x - groundDecel * Time.deltaTime, rb.velocity.y, 0);
+                        //}
+                        //else
+                        //{
+                        //    rb.velocity = new Vector3(rb.velocity.x + groundDecel * Time.deltaTime, rb.velocity.y, 0);
+                        //}
+
+                        // Hacky, can't be pushed by environment
+                        rb.velocity = new Vector3(0, rb.velocity.y);
+                    }
+
+                    animationManager.UpdateAnimatorValue(0);
+                }
+
+                if (Input.GetKeyDown(jump) && !hanging)
+                {
+                    Jump();
+                }
+
+                if (Input.GetKey(hang) && stamina > 0)
+                {
+                    if (!Input.GetKeyDown(jump))
+                    {
+                        if (touchingLeft)
+                        {
+                            // Play anim 
+                            animationManager.PlayTargetAnimation("WallStick");
+                            hanging = true;
+                            rb.constraints = RigidbodyConstraints.FreezeAll;
+                        }
+                        else if (touchingRight)
+                        {
+                            // Play anim
+                            animationManager.PlayTargetAnimation("WallStick");
+                            hanging = true;
+                            rb.constraints = RigidbodyConstraints.FreezeAll;
+                        }
+                    }
+
+                    if (Input.GetKeyDown(jump))
+                    {
+                        WallJump();
+                        animationManager.PlayTargetAnimation("WallStickJump");
                     }
                 }
                 else
                 {
-                    //if (rb.velocity.x > -0.05f || rb.velocity.x < 0.05f)
-                    //{
-                    //    rb.velocity = new Vector3(0, rb.velocity.y, 0);
-                    //}
-                    //if (rb.velocity.x > 0)
-                    //{
-                    //    rb.velocity = new Vector3(rb.velocity.x - groundDecel * Time.deltaTime, rb.velocity.y, 0);
-                    //}
-                    //else
-                    //{
-                    //    rb.velocity = new Vector3(rb.velocity.x + groundDecel * Time.deltaTime, rb.velocity.y, 0);
-                    //}
-
-                    // Hacky, can't be pushed by environment
-                    rb.velocity = new Vector3(0, rb.velocity.y);
+                    hanging = false;
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 }
 
-                animationManager.UpdateAnimatorValue(0);
-            }
-
-            if (Input.GetKeyDown(jump) && !hanging)
-            {
-                Jump();
-            }
-
-            if (Input.GetKey(hang) && stamina > 0)
-            {
-                if (!Input.GetKeyDown(jump))
+                // Stamina Regen
+                if (grounded && rb.velocity.x < 0.05f && rb.velocity.x > -0.05f)
                 {
-                    if (touchingLeft)
-                    {
-                        // Play anim 
-                        animationManager.PlayTargetAnimation("WallStick");
-                        hanging = true;
-                        rb.constraints = RigidbodyConstraints.FreezeAll;
-                    }
-                    else if (touchingRight)
-                    {
-                        // Play anim
-                        animationManager.PlayTargetAnimation("WallStick");
-                        hanging = true;
-                        rb.constraints = RigidbodyConstraints.FreezeAll;
-                    }
+                    RegenStamina(Time.deltaTime);
                 }
 
-                if (Input.GetKeyDown(jump))
+                // Hang Stamina
+                if (hanging)
                 {
-                    WallJump();
-                    animationManager.PlayTargetAnimation("WallStickJump");
+                    HangStamina(Time.deltaTime);
                 }
             }
-            else
+
+            // Wall Jump Timer
+            if (wallJumping)
             {
-                hanging = false;
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+                if (wallJumpCurrentTimer < wallJumpLockDuration)
+                {
+                    wallJumpCurrentTimer += Time.deltaTime;
+                }
+                else
+                {
+                    wallJumping = false;
+                    wallJumpCurrentTimer = 0;
+                }
             }
 
-            // Stamina Regen
-            if (grounded && rb.velocity.x < 0.05f && rb.velocity.x > -0.05f)
+            // Jump Physics
+            if (rb.velocity.y < 0 && !grounded)
             {
-                RegenStamina(Time.deltaTime);
+                rb.velocity += (fallSpeed - 1) * Physics.gravity.y * Time.deltaTime * Vector3.up;
+
+                jumpCount = 0;
+            }
+            else if (rb.velocity.y > 0 && !(Input.GetKey(KeyCode.Space)))
+            {
+                rb.velocity += (lowJumpMultiplier - 1) * Physics.gravity.y * Time.deltaTime * Vector3.up;
             }
 
-            // Hang Stamina
-            if (hanging)
+            // Failsafe for buggy interactions
+            if (grounded && jumpCount == 0 && !hanging && rb.velocity.y < 0.02f)
             {
-                HangStamina(Time.deltaTime);
+                RefreshJump();
             }
-        }
-
-        // Wall Jump Timer
-        if (wallJumping)
-        {
-            if(wallJumpCurrentTimer < wallJumpLockDuration)
+            else if (!grounded)
             {
-                wallJumpCurrentTimer += Time.deltaTime;
+                jumpCount = 0;
             }
-            else
+
+            if (canReduceSanity)
             {
-                wallJumping = false;
-                wallJumpCurrentTimer = 0;
+                DrainSanity(Time.deltaTime);
             }
-        }
-
-        // Jump Physics
-        if (rb.velocity.y < 0 && !grounded)
-        {
-            rb.velocity += (fallSpeed - 1) * Physics.gravity.y * Time.deltaTime * Vector3.up;
-
-            jumpCount = 0;
-        }
-        else if (rb.velocity.y > 0 && !(Input.GetKey(KeyCode.Space)))
-        {
-            rb.velocity += (lowJumpMultiplier - 1) * Physics.gravity.y * Time.deltaTime * Vector3.up;
-        }
-
-        // Failsafe for buggy interactions
-        if (grounded && jumpCount == 0 && !hanging && rb.velocity.y < 0.02f)
-        {
-            RefreshJump();
-        }
-        else if (!grounded)
-        {
-            jumpCount = 0;
         }
     }
 
