@@ -194,7 +194,7 @@ public class CharacterControl : MonoBehaviour
                 }
 
                 // Stamina Regen
-                if (grounded && rb.velocity.x < 0.05f && rb.velocity.x > -0.05f)
+                if (grounded)
                 {
                     RegenStamina(Time.deltaTime);
                 }
