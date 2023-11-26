@@ -5,9 +5,8 @@ using UnityEngine;
 public class CharacterAnimation : MonoBehaviour
 {
     [HideInInspector] public Animator anim;
-    int idleRunBlend;
 
-    private void Start()
+    private void OnEnable()
     {
         anim = GetComponent<Animator>();
     }

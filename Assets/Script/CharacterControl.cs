@@ -87,6 +87,12 @@ public class CharacterControl : MonoBehaviour
     [Header("Animation Manager")]
     public CharacterAnimation animationManager;
 
+    private void Start()
+    {
+        HUD.instance.SetMaxValues(maxStamina, maxSanity);
+        animationManager.anim.SetTrigger("StandUp");
+    }
+
     public void Initialize()
     {
 
@@ -308,6 +314,7 @@ public class CharacterControl : MonoBehaviour
         if (stamina >= staminaJumpCost)
         {
             stamina -= staminaJumpCost;
+            HUD.instance.UpdateStaminaDisplay(stamina);
         }
         else
         {
@@ -366,6 +373,7 @@ public class CharacterControl : MonoBehaviour
         if(stamina >= staminaJumpCost)
         {
             stamina -= staminaJumpCost;
+            HUD.instance.UpdateStaminaDisplay(stamina);
         }
         else
         {
@@ -436,5 +444,8 @@ public class CharacterControl : MonoBehaviour
         {
             sanity = 0;
         }
+        
+        HUD.instance.UpdateStaminaDisplay(stamina);
+        HUD.instance.UpdateSanityDisplay(sanity);
     }
 }
