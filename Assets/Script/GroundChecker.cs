@@ -6,7 +6,7 @@ public class GroundChecker : MonoBehaviour
 {
     [SerializeField] CharacterControl characterControl;
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.CompareTag("Wall"))
         {
