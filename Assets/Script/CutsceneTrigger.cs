@@ -15,7 +15,7 @@ public class CutsceneTrigger : MonoBehaviour
     {
         if (other.gameObject.GetComponent<CharacterControl>() != null)
         {
-            HUD.instance.BeginCutscene(cutsceneLines);
+            HUD.instance.BeginCutscene(cutsceneLines, true);
             gameObject.SetActive(false);
         }
     }

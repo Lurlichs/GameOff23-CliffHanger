@@ -153,7 +153,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1344415898}
-  - {fileID: 1104924078}
   - {fileID: 367410699}
   m_Father: {fileID: 1491375849}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -997,6 +996,7 @@ MonoBehaviour:
   sanitySlider: {fileID: 2076658601}
   HUDGroup: {fileID: 42543225}
   cutsceneBars: {fileID: 399080173}
+  characterControl: {fileID: 0}
 --- !u!225 &42543225
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1592,7 +1592,7 @@ Transform:
   m_GameObject: {fileID: 367410698}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.345, z: 0}
+  m_LocalPosition: {x: 0, y: 0.812, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1633,7 +1633,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.885407, b: 0.6666666, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 1
   m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3330,11 +3330,11 @@ Transform:
   m_GameObject: {fileID: 1104924077}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.110000014}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 36395290}
+  m_Father: {fileID: 1344415898}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &1104924079
 ParticleSystemRenderer:
@@ -8705,7 +8705,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0.110000014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1104924078}
   m_Father: {fileID: 36395290}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &1344415899
@@ -9419,7 +9420,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 0.4, y: 0.1, z: 0.4}
+    m_Scale: {x: 0.3, y: 0.1, z: 0.3}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -10055,9 +10056,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.8430131, b: 0.27843142, a: 0}
-        key1: {r: 1, g: 0.7926291, b: 0.38364774, a: 1}
-        key2: {r: 0.8867924, g: 0.33184993, b: 0.33184993, a: 0}
+        key0: {r: 1, g: 0.9040145, b: 0.55345905, a: 0}
+        key1: {r: 1, g: 0.541762, b: 0.33647794, a: 1}
+        key2: {r: 0.5943396, g: 0.27287287, b: 0.27287287, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 1}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -10065,7 +10066,7 @@ ParticleSystem:
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
         ctime1: 22359
-        ctime2: 39128
+        ctime2: 39514
         ctime3: 0
         ctime4: 0
         ctime5: 0

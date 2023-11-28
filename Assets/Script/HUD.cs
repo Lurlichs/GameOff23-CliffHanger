@@ -15,6 +15,8 @@ public class HUD : MonoBehaviour
     [SerializeField] private CanvasGroup HUDGroup;
     [SerializeField] private Transform cutsceneBars;
 
+    [SerializeField] private CharacterControl characterControl;
+
     void Awake()
     {
         instance = this;
@@ -39,7 +41,7 @@ public class HUD : MonoBehaviour
         sanitySlider.value = val;
     }
 
-    public void BeginCutscene(string[] cutsceneLines)
+    public void BeginCutscene(string[] cutsceneLines, bool disableCharacterMovement)
     {
         cutsceneManager.lines = cutsceneLines;
         HUDGroup.DOFade(0, 0.5f);
@@ -47,12 +49,18 @@ public class HUD : MonoBehaviour
         {
             cutsceneManager.StartCutsceneText();
         });
+
+        if (disableCharacterMovement)
+        {
+            characterControl.SetControllable(false);
+        }
     }
 
     public void EndCutscene()
     {
         HUDGroup.DOFade(1, 0.25f);
         cutsceneBars.DOScale(1.4f, 0.5f).SetEase(Ease.OutQuad);
+        characterControl.SetControllable(true);
     }
 
     

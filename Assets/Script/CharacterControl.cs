@@ -66,7 +66,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private CharacterState characterState;
     [SerializeField] private float jumpCount;
 
-    public bool controllable;
+    [SerializeField] private bool controllable;
 
     public bool grounded;
     public bool touchingRight;
@@ -247,6 +247,23 @@ public class CharacterControl : MonoBehaviour
                 DrainSanity(Time.deltaTime);
             }
         }
+        else
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y);
+            animationManager.UpdateAnimatorValue(0);
+        }
+    }
+
+    public void SetControllable(bool control)
+    {
+        if (control)
+        {
+            controllable = true;
+        }
+        else
+        {
+            controllable = false;
+        }
     }
 
     private void StateAssigner(CharacterState newState)
@@ -256,20 +273,6 @@ public class CharacterControl : MonoBehaviour
 
     private void Move(bool left, float deltaTime = 0)
     {
-        List<CharacterState> validStates = new List<CharacterState> {
-            CharacterState.STANDING,
-            CharacterState.RUNNING,
-            CharacterState.ON_LEDGE,
-            CharacterState.JUMPING_FALL,
-            CharacterState.FALLING
-        };
-
-        // Can't move in this situation
-        if (!validStates.Contains(characterState))
-        {
-            return;
-        }
-
         if (grounded)
         {
             if (left)
@@ -347,18 +350,6 @@ public class CharacterControl : MonoBehaviour
 
     private void Jump()
     {
-        List<CharacterState> validStates = new List<CharacterState> { 
-            CharacterState.STANDING,
-            CharacterState.RUNNING,
-            CharacterState.ON_LEDGE
-        };
-
-        // Can't jump in this situation
-        if (!validStates.Contains(characterState))
-        {
-            return;
-        }
-
         // Pay jump count
         if(jumpCount <= 0)
         {
