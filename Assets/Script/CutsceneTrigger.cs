@@ -6,6 +6,8 @@ public class CutsceneTrigger : MonoBehaviour
 {
     public string[] cutsceneLines;
 
+    [SerializeField] private bool isSanityCutscene;
+
     private void Start()
     {
         //HUD.instance.BeginCutscene(cutsceneLines);
@@ -17,6 +19,11 @@ public class CutsceneTrigger : MonoBehaviour
         {
             HUD.instance.BeginCutscene(cutsceneLines, true);
             gameObject.SetActive(false);
+
+            if(isSanityCutscene == true)
+            {
+                HUD.instance.sanityCanvasGroup.alpha = 1;
+            }
         }
     }
 }

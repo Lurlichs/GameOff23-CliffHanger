@@ -60,7 +60,7 @@ Material:
     - _Toggle_Fresnel: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _FresnelColour: {r: 2.858368, g: 0, b: 8, a: 0}
+    - _FresnelColour: {r: 2.858368, g: 0, b: 8, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4920969336571149106

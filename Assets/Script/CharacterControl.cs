@@ -90,7 +90,6 @@ public class CharacterControl : MonoBehaviour
     private void Start()
     {
         HUD.instance.SetMaxValues(maxStamina, maxSanity);
-        animationManager.anim.SetTrigger("StandUp");
     }
 
     public void Initialize()

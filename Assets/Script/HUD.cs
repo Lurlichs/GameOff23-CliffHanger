@@ -14,12 +14,18 @@ public class HUD : MonoBehaviour
 
     [SerializeField] private CanvasGroup HUDGroup;
     [SerializeField] private Transform cutsceneBars;
+    public CanvasGroup sanityCanvasGroup;
 
     [SerializeField] private CharacterControl characterControl;
 
     void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
+        sanityCanvasGroup.alpha = 0;
+        HUDGroup.alpha = 0;
     }
 
     public void SetMaxValues(float maxStam, float maxSan)
@@ -61,6 +67,7 @@ public class HUD : MonoBehaviour
         HUDGroup.DOFade(1, 0.25f);
         cutsceneBars.DOScale(1.4f, 0.5f).SetEase(Ease.OutQuad);
         characterControl.SetControllable(true);
+        characterControl.animationManager.anim.SetTrigger("StandUp");
     }
 
     
