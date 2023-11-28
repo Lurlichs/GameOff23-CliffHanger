@@ -22,7 +22,7 @@ public class CutsceneTrigger : MonoBehaviour
 
             if(isSanityCutscene == true)
             {
-                HUD.instance.sanityCanvasGroup.alpha = 1;
+                HUD.instance.ActivateSanityBar();
             }
         }
     }

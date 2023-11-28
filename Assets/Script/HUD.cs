@@ -10,6 +10,8 @@ public class HUD : MonoBehaviour
     public CutsceneManager cutsceneManager;
 
     [SerializeField] private Slider staminaSlider;
+    [SerializeField] private Slider staminaSliderAlt;
+
     [SerializeField] private Slider sanitySlider;
 
     [SerializeField] private CanvasGroup HUDGroup;
@@ -24,13 +26,15 @@ public class HUD : MonoBehaviour
     }
     private void Start()
     {
-        sanityCanvasGroup.alpha = 0;
+        // sanityCanvasGroup.alpha = 0;
         HUDGroup.alpha = 0;
     }
 
     public void SetMaxValues(float maxStam, float maxSan)
     {
         staminaSlider.maxValue = maxStam;
+        staminaSliderAlt.maxValue = maxStam;
+
         sanitySlider.maxValue = maxSan;
         
         UpdateStaminaDisplay(maxStam);
@@ -40,6 +44,7 @@ public class HUD : MonoBehaviour
     public void UpdateStaminaDisplay(float val)
     {
         staminaSlider.value = val;
+        staminaSliderAlt.value = val;
     }
 
     public void UpdateSanityDisplay(float val)
@@ -66,9 +71,22 @@ public class HUD : MonoBehaviour
     {
         HUDGroup.DOFade(1, 0.25f);
         cutsceneBars.DOScale(1.4f, 0.5f).SetEase(Ease.OutQuad);
-        characterControl.SetControllable(true);
-        characterControl.animationManager.anim.SetTrigger("StandUp");
+
+        StartCoroutine(DelayStandUp());
     }
 
+    private IEnumerator DelayStandUp()
+    {
+        characterControl.animationManager.anim.SetTrigger("StandUp");
+        yield return new WaitForSeconds(1.4f);
+        characterControl.SetControllable(true);
+    }
+
+
+    public void ActivateSanityBar()
+    {
+        sanityCanvasGroup.alpha = 1;
+        characterControl.canReduceSanity = true;
+    }
     
 }
