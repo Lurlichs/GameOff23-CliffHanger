@@ -21017,7 +21017,7 @@ MonoBehaviour:
   - A test of my conviction.
   - I hope I can do this.
   - No... I can do this... I WILL do this.
-  isSanityCutscene: 0
+  isSanityCutscene: 1
 --- !u!4 &1130591935
 Transform:
   m_ObjectHideFlags: 0

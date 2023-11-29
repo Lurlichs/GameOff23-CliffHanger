@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 956032286863798509}
   - component: {fileID: 5028494183140796667}
   - component: {fileID: 7801946435317306575}
-  - component: {fileID: 5376021887051456692}
   m_Layer: 0
   m_Name: WoodenPlatform
   m_TagString: Wall
@@ -84,24 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5376021887051456692
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4910816641196883358}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.239645, y: 0.36076593, z: 1.8584492}
-  m_Center: {x: 0, y: 0.23648, z: -0.00000023841858}
