@@ -52,7 +52,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _FresnelLowerLimit: 1
-    - _FresnelMultiplier: 0.85
+    - _FresnelMultiplier: 0.7
     - _FresnelUpperLimit: 10
     - _QueueControl: 0
     - _QueueOffset: 0

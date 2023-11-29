@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class RespawnTrigger : MonoBehaviour
 {
+
+    [SerializeField] private GameObject campfireParticles;
+    [SerializeField] private Transform respawnPos;
+    [SerializeField] private int priority;
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.GetComponent<CharacterControl>() != null)
+        {
+            campfireParticles.SetActive(true);
+
+            if(RespawnTracker.Instance != null)
+            {
+                RespawnTracker.Instance.SetNewRespawnCoords(respawnPos.position, priority);
+            }
+            else
+            {
+                Debug.LogWarning("Respawn tracker missing");
+            }
+        }
     }
 }
