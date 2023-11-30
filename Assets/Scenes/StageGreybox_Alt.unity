@@ -1701,6 +1701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnPos: {x: 0, y: 0, z: 0}
   currentPriority: 0
+  cutscenePriority: 0
 --- !u!1 &80263061
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,6 +3153,7 @@ MonoBehaviour:
   - I can end up like him.
   - Better step with caution.
   - This place is draining my sanity...
+  cutscenePriority: 2
   isSanityCutscene: 1
 --- !u!1001 &165893228
 PrefabInstance:
@@ -17462,6 +17464,72 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 618294268}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &621503901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 621503902}
+  - component: {fileID: 621503904}
+  - component: {fileID: 621503903}
+  m_Layer: 0
+  m_Name: Fall Death (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &621503902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621503901}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 120.4, y: 4.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1192392243}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &621503903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621503901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ebbd0be92877c4990b0e851e140eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &621503904
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621503901}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 40, y: 5, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &637889576
 GameObject:
   m_ObjectHideFlags: 0
@@ -19283,6 +19351,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 72ddd10b9bc60f44b8e93637714cc860,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 72ddd10b9bc60f44b8e93637714cc860,
+        type: 3}
       propertyPath: m_TagString
       value: Wall
       objectReference: {fileID: 0}
@@ -20250,6 +20323,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: platform3 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 72ddd10b9bc60f44b8e93637714cc860,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 72ddd10b9bc60f44b8e93637714cc860,
         type: 3}
@@ -21563,6 +21641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 949937060}
   - component: {fileID: 949937061}
+  - component: {fileID: 949937062}
   m_Layer: 0
   m_Name: Fall Death
   m_TagString: Untagged
@@ -21579,7 +21658,7 @@ Transform:
   m_GameObject: {fileID: 949937059}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 142.7, y: -8.7, z: 0}
+  m_LocalPosition: {x: 32.6, y: -8.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21604,8 +21683,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 400, y: 5, z: 15}
+  m_Size: {x: 40, y: 5, z: 15}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &949937062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949937059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ebbd0be92877c4990b0e851e140eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &966254208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24107,6 +24198,7 @@ MonoBehaviour:
   - A test of my conviction.
   - I hope I can do this.
   - No... I can do this... I WILL do this.
+  cutscenePriority: 1
   isSanityCutscene: 0
 --- !u!4 &1130591935
 Transform:
@@ -24327,6 +24419,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 949937060}
+  - {fileID: 621503902}
+  - {fileID: 2026962375}
   m_Father: {fileID: 668634605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1193105027
@@ -38044,6 +38138,72 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2025858103}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2026962374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026962375}
+  - component: {fileID: 2026962377}
+  - component: {fileID: 2026962376}
+  m_Layer: 0
+  m_Name: Fall Death (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2026962375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026962374}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 199, y: 4.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1192392243}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2026962376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026962374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ebbd0be92877c4990b0e851e140eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &2026962377
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026962374}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 40, y: 5, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2029167191
 PrefabInstance:
   m_ObjectHideFlags: 0

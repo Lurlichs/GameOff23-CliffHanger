@@ -21,9 +21,9 @@ public class RespawnTrigger : MonoBehaviour
         {
             campfireParticles.SetActive(true);
 
-            if(RespawnTracker.Instance != null)
+            if(ValueTracker.Instance != null)
             {
-                RespawnTracker.Instance.SetNewRespawnCoords(respawnPos.position, priority);
+                ValueTracker.Instance.SetNewRespawnCoords(respawnPos.position, priority);
             }
             else
             {

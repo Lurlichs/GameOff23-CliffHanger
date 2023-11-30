@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RespawnTracker : MonoBehaviour
+public class ValueTracker : MonoBehaviour
 {
-    public static RespawnTracker Instance;
+    public static ValueTracker Instance;
 
     [SerializeField] private Vector3 respawnPos;
     [SerializeField] private int currentPriority;
+
+    public int cutscenePriority;
 
     private void Awake()
     {
