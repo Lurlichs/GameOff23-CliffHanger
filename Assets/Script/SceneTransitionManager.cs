@@ -32,6 +32,11 @@ public class SceneTransitionManager : MonoBehaviour
     {
         StartCoroutine(DeathTransition());
     }
+    
+    public void NextStage(string scene)
+    {
+        StartCoroutine(NextStageTransition(scene));
+    }
 
     private IEnumerator DeathTransition()
     {
@@ -51,6 +56,25 @@ public class SceneTransitionManager : MonoBehaviour
 
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
+    }
+
+    private IEnumerator NextStageTransition(string scene)
+    {
+        float time = 0.5f;
+        float finalWaitTime = 0.15f;
+        float currentTime = 0f;
+
+        while (currentTime < time)
+        {
+            blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, currentTime / time);
+
+            currentTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(finalWaitTime);
+
+        SceneManager.LoadScene(scene);
     }
 
     private IEnumerator InTransition()
