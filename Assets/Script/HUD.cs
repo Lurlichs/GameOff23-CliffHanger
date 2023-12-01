@@ -96,6 +96,10 @@ public class HUD : MonoBehaviour
         characterControl.animationManager.anim.SetTrigger("StandUp");
         yield return new WaitForSeconds(1.4f);
         characterControl.SetControllable(true);
+        if (TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.FadeIn();
+        }
     }
 
 
