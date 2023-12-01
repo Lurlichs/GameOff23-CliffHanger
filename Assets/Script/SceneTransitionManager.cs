@@ -75,6 +75,7 @@ public class SceneTransitionManager : MonoBehaviour
         yield return new WaitForSeconds(finalWaitTime);
         BGMController.Instance.currentIndex += 1;
         BGMController.Instance.PlayNextStage();
+        ValueTracker.Instance.respawnPos = Vector3.zero;
 
         SceneManager.LoadScene(scene);
     }

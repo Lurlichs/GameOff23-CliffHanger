@@ -460,7 +460,7 @@ MonoBehaviour:
   maxStamina: 100
   maxSanity: 100
   staminaRegen: 35
-  sanityDrain: 0.4
+  sanityDrain: 0.9
   sanityRegen: 15
   staminaJumpCost: 15
   hangStaminaCost: 4

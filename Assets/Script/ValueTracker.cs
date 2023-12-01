@@ -6,7 +6,7 @@ public class ValueTracker : MonoBehaviour
 {
     public static ValueTracker Instance;
 
-    [SerializeField] private Vector3 respawnPos;
+    public Vector3 respawnPos;
     [SerializeField] private int currentPriority;
 
     public int cutscenePriority;
@@ -29,7 +29,10 @@ public class ValueTracker : MonoBehaviour
         if(respawnPos != Vector3.zero)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.transform.position = respawnPos;
+            if(player != null)
+            {
+                player.transform.position = respawnPos;
+            }
         }
     }
 

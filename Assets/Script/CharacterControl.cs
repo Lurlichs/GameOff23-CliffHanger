@@ -132,19 +132,6 @@ public class CharacterControl : MonoBehaviour
                     }
                     else
                     {
-                        //if (rb.velocity.x > -0.05f || rb.velocity.x < 0.05f)
-                        //{
-                        //    rb.velocity = new Vector3(0, rb.velocity.y, 0);
-                        //}
-                        //if (rb.velocity.x > 0)
-                        //{
-                        //    rb.velocity = new Vector3(rb.velocity.x - groundDecel * Time.deltaTime, rb.velocity.y, 0);
-                        //}
-                        //else
-                        //{
-                        //    rb.velocity = new Vector3(rb.velocity.x + groundDecel * Time.deltaTime, rb.velocity.y, 0);
-                        //}
-
                         // Hacky, can't be pushed by environment
                         rb.velocity = new Vector3(0, rb.velocity.y);
                     }
@@ -155,6 +142,7 @@ public class CharacterControl : MonoBehaviour
                 if (Input.GetKeyDown(jump) && !hanging)
                 {
                     Jump();
+                    AudioManager.Instance.Play("swish");
                 }
 
                 if (Input.GetKey(hang) && stamina > 0)
@@ -175,12 +163,18 @@ public class CharacterControl : MonoBehaviour
                             hanging = true;
                             rb.constraints = RigidbodyConstraints.FreezeAll;
                         }
+
+                        if (Input.GetKeyDown(hang))
+                        {
+                            AudioManager.Instance.Play("cling", 0.15f);
+                        }
                     }
 
                     if (Input.GetKeyDown(jump))
                     {
                         WallJump();
                         animationManager.PlayTargetAnimation("WallStickJump");
+                        AudioManager.Instance.Play("swish");
                     }
                 }
                 else

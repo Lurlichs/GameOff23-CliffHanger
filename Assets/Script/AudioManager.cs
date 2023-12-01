@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
         Instance = this;
     }
 
-    public void Play(string Name, float vol = 0.05f)
+    public void Play(string Name, float vol = 0.3f)
     {
         source.volume = vol;
 

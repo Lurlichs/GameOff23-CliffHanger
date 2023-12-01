@@ -16,6 +16,14 @@ public class GroundChecker : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.CompareTag("Wall"))
+        {
+            AudioManager.Instance.Play("land");
+        }
+    }
+
     private void OnTriggerExit(Collider collision)
     {
         if (collision.CompareTag("Wall"))
