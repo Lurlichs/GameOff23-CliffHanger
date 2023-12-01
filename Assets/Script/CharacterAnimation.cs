@@ -54,4 +54,12 @@ public class CharacterAnimation : MonoBehaviour
     {
         gameObject.transform.localScale = new Vector3(1, 1, direction);
     }
+
+    public void PlayFootstepsSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play("Footstep");
+        }
+    }
 }
