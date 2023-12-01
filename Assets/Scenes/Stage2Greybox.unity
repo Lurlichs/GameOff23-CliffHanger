@@ -2979,6 +2979,7 @@ MonoBehaviour:
   - If I'm not careful...
   - I can end up like him.
   - Better step with caution.
+  cutscenePriority: 0
   isSanityCutscene: 0
 --- !u!1 &177192592
 GameObject:
@@ -12338,7 +12339,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.15
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 171.86534
   m_InnerSpotAngle: 21.80208
@@ -14575,6 +14576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutsceneManager: {fileID: 1275720062}
+  inCutscene: 0
   staminaSlider: {fileID: 48537369}
   staminaSliderAlt: {fileID: 1634626683}
   sanitySlider: {fileID: 7801711}
@@ -33367,6 +33369,7 @@ MonoBehaviour:
   - A test of my conviction.
   - I hope I can do this.
   - No... I can do this... I WILL do this.
+  cutscenePriority: 0
   isSanityCutscene: 1
 --- !u!4 &1130591935
 Transform:
@@ -52220,7 +52223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1942133496
 AudioSource:
   m_ObjectHideFlags: 0

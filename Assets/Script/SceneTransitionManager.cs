@@ -60,7 +60,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     private IEnumerator NextStageTransition(string scene)
     {
-        float time = 0.5f;
+        float time = 0.2f;
         float finalWaitTime = 1f;
         float currentTime = 0f;
 
@@ -73,6 +73,8 @@ public class SceneTransitionManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(finalWaitTime);
+        BGMController.Instance.currentIndex += 1;
+        BGMController.Instance.PlayNextStage();
 
         SceneManager.LoadScene(scene);
     }
