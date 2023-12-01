@@ -20,7 +20,7 @@ public class GroundChecker : MonoBehaviour
     {
         if (collision.CompareTag("Wall"))
         {
-            AudioManager.Instance.Play("land");
+            AudioManager.Instance.Play("swish");
         }
     }
 
