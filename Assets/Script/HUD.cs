@@ -9,6 +9,8 @@ public class HUD : MonoBehaviour
     public static HUD instance;
     public CutsceneManager cutsceneManager;
 
+    public bool inCutscene;
+
     [SerializeField] private Slider staminaSlider;
     [SerializeField] private Slider staminaSliderAlt;
 
@@ -27,7 +29,11 @@ public class HUD : MonoBehaviour
     private void Start()
     {
         // sanityCanvasGroup.alpha = 0;
-        HUDGroup.alpha = 0;
+        // HUDGroup.alpha = 0;
+        if(ValueTracker.Instance.cutscenePriority >= 2)
+        {
+            ActivateSanityBar();
+        }
     }
 
     public void SetMaxValues(float maxStam, float maxSan)
@@ -54,6 +60,8 @@ public class HUD : MonoBehaviour
 
     public void BeginCutscene(string[] cutsceneLines, bool disableCharacterMovement)
     {
+        inCutscene = true;
+
         cutsceneManager.lines = cutsceneLines;
         HUDGroup.DOFade(0, 0.5f);
         cutsceneBars.DOScale(1, 1).SetEase(Ease.OutQuad).OnComplete(() =>
@@ -72,11 +80,19 @@ public class HUD : MonoBehaviour
         HUDGroup.DOFade(1, 0.25f);
         cutsceneBars.DOScale(1.4f, 0.5f).SetEase(Ease.OutQuad);
 
+        inCutscene = false;
+
+        StartCoroutine(DelayStandUp());
+    }
+
+    public void CallPlayerStand()
+    {
         StartCoroutine(DelayStandUp());
     }
 
     private IEnumerator DelayStandUp()
     {
+        characterControl.SetControllable(false);
         characterControl.animationManager.anim.SetTrigger("StandUp");
         yield return new WaitForSeconds(1.4f);
         characterControl.SetControllable(true);

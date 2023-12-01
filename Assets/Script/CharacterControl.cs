@@ -92,11 +92,6 @@ public class CharacterControl : MonoBehaviour
         HUD.instance.SetMaxValues(maxStamina, maxSanity);
     }
 
-    public void Initialize()
-    {
-
-    }
-
     void Update()
     {
         if (controllable)

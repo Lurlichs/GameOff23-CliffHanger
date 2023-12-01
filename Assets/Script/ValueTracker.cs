@@ -26,7 +26,11 @@ public class ValueTracker : MonoBehaviour
 
     public void ResetScene()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(respawnPos != Vector3.zero)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.transform.position = respawnPos;
+        }
     }
 
     public void SetNewRespawnCoords(Vector3 position, int priority)
