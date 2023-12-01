@@ -47,6 +47,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float maxSanity;
     [SerializeField] private float staminaRegen; // per sec
     [SerializeField] private float sanityDrain; // drain while in terrifying situations
+    [SerializeField] private float sanityRegen;
 
     [SerializeField] private float staminaJumpCost;
     [SerializeField] private float hangStaminaCost;
@@ -60,6 +61,7 @@ public class CharacterControl : MonoBehaviour
     public float sanity;
 
     public bool canReduceSanity;
+    public bool canGainSanity;
 
     [Header("State")]
 
@@ -240,6 +242,11 @@ public class CharacterControl : MonoBehaviour
             {
                 DrainSanity(Time.deltaTime);
             }
+
+            if (canGainSanity)
+            {
+                RegenSanity(Time.deltaTime);
+            }
         }
         else
         {
@@ -383,6 +390,13 @@ public class CharacterControl : MonoBehaviour
     private void RegenStamina(float duration)
     {
         stamina += duration * staminaRegen;
+
+        CapStats();
+    }
+
+    private void RegenSanity(float duration)
+    {
+        sanity += duration * sanityRegen;
 
         CapStats();
     }

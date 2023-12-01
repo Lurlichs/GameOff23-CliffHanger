@@ -61,7 +61,7 @@ public class SceneTransitionManager : MonoBehaviour
     private IEnumerator NextStageTransition(string scene)
     {
         float time = 0.5f;
-        float finalWaitTime = 0.15f;
+        float finalWaitTime = 1f;
         float currentTime = 0f;
 
         while (currentTime < time)
@@ -79,8 +79,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     private IEnumerator InTransition()
     {
-        float time = 0.3f;
-        float finalWaitTime = 0.15f;
+        float time = 0.5f;
         float currentTime = 0f;
 
         while (currentTime < time)
@@ -91,6 +90,6 @@ public class SceneTransitionManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        yield return new WaitForSeconds(finalWaitTime);
+        blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, 0);
     }
 }

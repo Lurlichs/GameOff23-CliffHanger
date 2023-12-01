@@ -461,6 +461,7 @@ MonoBehaviour:
   maxSanity: 100
   staminaRegen: 35
   sanityDrain: 0.4
+  sanityRegen: 15
   staminaJumpCost: 15
   hangStaminaCost: 4
   wallJumpLockDuration: 0.3
@@ -470,6 +471,7 @@ MonoBehaviour:
   stamina: 100
   sanity: 100
   canReduceSanity: 0
+  canGainSanity: 0
   characterState: 0
   jumpCount: 1
   controllable: 1

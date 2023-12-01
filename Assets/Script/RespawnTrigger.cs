@@ -20,8 +20,9 @@ public class RespawnTrigger : MonoBehaviour
         if (other.gameObject.GetComponent<CharacterControl>() != null)
         {
             campfireParticles.SetActive(true);
+            other.gameObject.GetComponent<CharacterControl>().canGainSanity = true;
 
-            if(ValueTracker.Instance != null)
+            if (ValueTracker.Instance != null)
             {
                 ValueTracker.Instance.SetNewRespawnCoords(respawnPos.position, priority);
             }
@@ -29,6 +30,14 @@ public class RespawnTrigger : MonoBehaviour
             {
                 Debug.LogWarning("Respawn tracker missing");
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponent<CharacterControl>() != null)
+        {
+            other.gameObject.GetComponent<CharacterControl>().canGainSanity = false;
         }
     }
 }
